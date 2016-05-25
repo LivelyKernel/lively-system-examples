@@ -49,7 +49,7 @@
             Promise.resolve().then(() => {
               log("Testing runEval...")
               var code = "x + 3";
-              vm.esm.runEval(System, code, {targetModule: "test-package"})
+              vm.runEval(code, {targetModule: "test-package"})
                 .then(result => {
                   if (result.isError) throw result.value;
                   log(`evaluating ${code}, result: ${JSON.stringify(result, null, 2)}`)
@@ -59,7 +59,7 @@
             Promise.resolve().then(() => {
               log("Testing async eval...")
               var code = "async function foo() { return new Promise((resolve, reject) => setTimeout(resolve, 300, 23)); }; await foo();";
-              vm.esm.runEval(System, code, {targetModule: "test-package"})
+              vm.runEval(code, {targetModule: "test-package"})
                 .then(result => {
                   if (result.isError) throw result.value;
                   log(`evaluating ${code}, result: ${JSON.stringify(result, null, 2)}`);

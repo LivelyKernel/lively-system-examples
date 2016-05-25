@@ -18,7 +18,7 @@ modules.importPackage(__dirname + "/test-package")
       Promise.resolve().then(() => {
         log("Testing runEval...")
         var code = "x + 3";
-        return vm.esm.runEval(System, code, {targetModule: "test-package"})
+        return vm.runEval(code, {targetModule: "test-package"})
           .then(result => {
             if (result.isError) throw result.value;
             log(`evaluating ${code}, result: ${JSON.stringify(result, null, 2)}`)
@@ -28,7 +28,7 @@ modules.importPackage(__dirname + "/test-package")
       Promise.resolve().then(() => {
         log("Testing async eval...")
         var code = "async function foo() { return new Promise((resolve, reject) => setTimeout(resolve, 300, 23)); }; await foo();";
-        return vm.esm.runEval(System, code, {targetModule: "test-package"})
+        return vm.runEval(code, {targetModule: "test-package"})
           .then(result => {
             if (result.isError) throw result.value;
             log(`evaluating ${code}, result: ${JSON.stringify(result, null, 2)}`);
