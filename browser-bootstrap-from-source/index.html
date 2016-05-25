@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>browser from-source example</title>
+  </head>
+  <body>
+    <script src="../node_modules/babel-core/browser.js"></script>
+    <script src="../node_modules/babel-regenerator-runtime/runtime.js"></script>
+    <script src="../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="load-from-source.js"></script>
+
+    <ul id="log"></ul>
+    <script> // helper
+      function log(msg) {
+        console.log(msg);
+        var logEl = document.querySelector("#log");
+        if (logEl) {
+          var stringified = typeof msg === "object" ? JSON.stringify(msg, null, 2) : String(msg);
+          logEl.insertAdjacentHTML("beforeend", '<li><pre>' + stringified + '</li>');
+        }
+      }
+    </script>
+
+    <script>
+      // that shouldn't be necessary ???
+      System.set(System.normalizeSync("babel-regenerator-runtime.js"), System.newModule(regeneratorRuntime));
+
+      // First load the vm and modules packages, for that to work we need to
+      // properly setup the SystemJS options in load-from-source.js!
+      Promise.all([
+        System.import("lively.vm"),
+        System.import("lively.modules")
+      ])
+      .then(loaded => {
+        // At this point lively.modules takes over and we now have the notion
+        // of a "package".
+        // To test if this works we try loading a test package and evaluating
+        // stuff in its internal context ...
+
+        var modules = loaded[1], vm = loaded[0];
+
+        modules.importPackage("./test-package/")
+        .then(module => log("Successfully loaded test-package: " + JSON.stringify(module)))
+        .then(() =>
+          // The package will be automatically instrumented, allowing to
+          // inspect the runtime state of its modules and evaluating stuff inside
+          // it:
+          Promise.all([
+            Promise.resolve().then(() => {
+              log("Testing runEval...")
+              var code = "x + 3";
+              vm.esm.runEval(System, code, {targetModule: "test-package"})
+                .then(result => {
+                  if (result.isError) throw result.value;
+                  log(`evaluating ${code}, result: ${JSON.stringify(result, null, 2)}`)
+                })
+            }),
+  
+            Promise.resolve().then(() => {
+              log("Testing async eval...")
+              var code = "async function foo() { return new Promise((resolve, reject) => setTimeout(resolve, 300, 23)); }; await foo();";
+              vm.esm.runEval(System, code, {targetModule: "test-package"})
+                .then(result => {
+                  if (result.isError) throw result.value;
+                  log(`evaluating ${code}, result: ${JSON.stringify(result, null, 2)}`);
+                });
+            })
+          ]))
+        .catch(err => {
+          if (err.originalErr) log(err.originalErr.stack);
+          log(err.stack || err);
+        });
+      })
+    </script>
+  </body>
+</html>
