@@ -2,5 +2,9 @@
   "name": "lively.modules-examples",
   "version": "0.1.0",
   "dependencies": {
+    "babel-core": "^6.9.0",
+    "babel-regenerator-runtime": "^6.5.0",
+    "lively.modules": "*",
+    "systemjs": "^0.19.27"
   }
 }
