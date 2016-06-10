@@ -4,9 +4,8 @@
     <title>browser from-source example</title>
   </head>
   <body>
-    <script src="../node_modules/babel-core/browser.js"></script>
-    <script src="../node_modules/babel-regenerator-runtime/runtime.js"></script>
     <script src="../node_modules/systemjs/dist/system.src.js"></script>
+    <script src="../node_modules/lively.modules/systemjs-init.js"></script>
     <script src="load-from-source.js"></script>
 
     <ul id="log"></ul>
@@ -23,7 +22,7 @@
 
     <script>
       // that shouldn't be necessary ???
-      System.set(System.normalizeSync("babel-regenerator-runtime.js"), System.newModule(regeneratorRuntime));
+      // System.set(System.normalizeSync("babel-regenerator-runtime.js"), System.newModule(regeneratorRuntime));
 
       // First load the vm and modules packages, for that to work we need to
       // properly setup the SystemJS options in load-from-source.js!

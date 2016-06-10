@@ -1,11 +1,7 @@
-require("babel-core");
-require("babel-regenerator-runtime");
 require("systemjs");
 require("lively.modules");
 
 Promise.resolve()
-  .then(() => lively.modules.importPackage("node_modules/lively.lang"))
-  .then(() => lively.modules.importPackage("node_modules/lively.ast"))
   .then(() => lively.modules.importPackage("node_modules/lively.modules"))
   .then(() => lively.modules.importPackage("node_modules/lively.vm"))
   .then(() => {

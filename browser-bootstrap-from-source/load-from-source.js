@@ -8,6 +8,7 @@ var GLOBAL = isNode ? global : window;
 
 if (isNode && !GLOBAL.System) require("systemjs");
 
+var oldSystem = System;
 GLOBAL.System = new (GLOBAL.System.constructor)(); // new system for bootstrap
 
 var systemDir = (function computeLivelyModulesDir() {
@@ -24,6 +25,8 @@ var systemDir = (function computeLivelyModulesDir() {
     document.location.origin + "/lively.modules-examples";
   
 })();
+
+console.log("determined system dir as %s", systemDir);
 
 System.normalizeSync = wrap(System.normalizeSync, function(proceed, name, parentName, isPlugin) {
   return fixNormalizeResult(proceed(name = fixNormalizeInput(name, parentName), parentName, isPlugin))
@@ -53,13 +56,17 @@ function fixNormalizeResult(normalized) {
 
 System.config({
   baseURL: isNode ? "file://" + __dirname.replace(/\/$/, "") : "/",
-  transpiler: "babel",
   defaultJSExtensions: true,
+  transpiler: oldSystem.transpiler,
+  babelOptions: oldSystem.babelOptions,
   map: {
-    "babel": systemDir + "/node_modules/babel-core/browser.js",
-    "lively.lang": systemDir + "/node_modules/lively.lang/index.js",
+    // 'plugin-babel': systemDir + "/node_modules/lively.modules/node_modules/systemjs-plugin-babel/plugin-babel.js",
+    // 'systemjs-babel-build': systemDir + "/node_modules/lively.modules/node_modules/systemjs-plugin-babel/systemjs-babel-browser.js",
+    'plugin-babel': oldSystem.map['plugin-babel'],
+    'systemjs-babel-build': oldSystem.map['systemjs-babel-build'],
+    "lively.lang": systemDir + "/node_modules/lively.modules/node_modules/lively.lang/index.js",
+    "lively.ast": systemDir + "/node_modules/lively.modules/node_modules/lively.ast/index.js",
     "lively.vm": systemDir + "/node_modules/lively.vm/index.js",
-    "lively.ast": systemDir + "/node_modules/lively.ast/index.js",
     "lively.modules": systemDir + "/node_modules/lively.modules/index.js",
       "path": "@empty",
       "fs": "@empty",
@@ -75,15 +82,15 @@ System.config({
     }
   },
   packages: {
-    [systemDir +"/node_modules/lively.lang"]: {main: "index.js"},
-    [systemDir +"/node_modules/lively.ast"]: {main: "index.js"},
+    [systemDir +"/node_modules/lively.modules/node_modules/lively.lang"]: {main: "index.js"},
+    [systemDir +"/node_modules/lively.modules/node_modules/lively.ast"]: {main: "index.js"},
     [systemDir +"/node_modules/lively.vm"]: {main: "index.js"},
   },
   packageConfigPaths: [
     systemDir +"/package.json",
+    systemDir +"/node_modules/lively.modules/node_modules/lively.lang/package.json",
+    systemDir +"/node_modules/lively.modules/node_modules/lively.ast/package.json",
     systemDir +"/node_modules/lively.vm/package.json",
-    systemDir +"/node_modules/lively.ast/package.json",
-    systemDir +"/node_modules/lively.lang/package.json",
     systemDir +"/node_modules/lively.ast/node_modules/acorn/package.json"
   ]
 })

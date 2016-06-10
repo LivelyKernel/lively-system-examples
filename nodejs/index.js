@@ -1,5 +1,3 @@
-require("babel-core");
-require("babel-regenerator-runtime");
 require("systemjs");
 var modules = require("lively.modules");
 var vm = require("lively.vm");

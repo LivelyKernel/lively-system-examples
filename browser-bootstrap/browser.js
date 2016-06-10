@@ -1,16 +1,14 @@
 Promise.resolve()
-  .then(() => lively.modules.importPackage("../../node_modules/lively.lang"))
-  .then(() => lively.modules.importPackage("../../node_modules/lively.ast"))
-  .then(() => lively.modules.importPackage("../../node_modules/lively.modules"))
-  .then(() => lively.modules.importPackage("../../node_modules/lively.vm"))
-  .then(() => {
+  .then(function() { return lively.modules.importPackage('../../node_modules/lively.modules'); })
+  .then(function() { return lively.modules.importPackage('../../node_modules/lively.vm'); })
+  .then(function() {
     log(`Successfully bootstrapped lively.system`);
-    
-    printModuleState("lively.modules");
-    printModuleState("lively.vm");
+    printModuleState('lively.modules');
+    printModuleState('lively.vm');
   })
-  .catch(err => {
-    if (err.originalErr) log(err.originalErr.stack);
+  .catch(function(err) {
+    if (err.originalErr)
+        log(err.originalErr.stack);
     log(err.stack || err);
     log(systemConfPrint());
   });
