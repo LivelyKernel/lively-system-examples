@@ -17,7 +17,7 @@ var systemDir = (function computeLivelyModulesDir() {
   if (typeof document !== "undefined") {
     var loadScript = [].slice.apply(document.querySelectorAll("script")).find(script => script.src.match(/load-from-source.js$/));
     if (loadScript)
-      return loadScript.src.split("/").slice(0,-1).join("/") + "/..";
+      return loadScript.src.split("/").slice(0,-2).join("/");
   }
   
   return URL.root ?
@@ -66,7 +66,7 @@ System.config({
     'systemjs-babel-build': oldSystem.map['systemjs-babel-build'],
     "lively.lang": systemDir + "/node_modules/lively.modules/node_modules/lively.lang/index.js",
     "lively.ast": systemDir + "/node_modules/lively.modules/node_modules/lively.ast/index.js",
-    "lively.vm": systemDir + "/node_modules/lively.vm/index.js",
+    "lively.vm": systemDir + "/node_modules/lively.modules/node_modules/lively.vm/index.js",
     "lively.modules": systemDir + "/node_modules/lively.modules/index.js",
       "path": "@empty",
       "fs": "@empty",
@@ -84,13 +84,14 @@ System.config({
   packages: {
     [systemDir +"/node_modules/lively.modules/node_modules/lively.lang"]: {main: "index.js"},
     [systemDir +"/node_modules/lively.modules/node_modules/lively.ast"]: {main: "index.js"},
-    [systemDir +"/node_modules/lively.vm"]: {main: "index.js"},
+    [systemDir +"/node_modules/lively.modules/node_modules/lively.vm"]: {main: "index.js"},
+    [systemDir +"/node_modules/lively.modules"]: {main: "index.js"},
   },
   packageConfigPaths: [
     systemDir +"/package.json",
     systemDir +"/node_modules/lively.modules/node_modules/lively.lang/package.json",
     systemDir +"/node_modules/lively.modules/node_modules/lively.ast/package.json",
-    systemDir +"/node_modules/lively.vm/package.json",
+    systemDir +"/node_modules/lively.modules/node_modules/lively.vm/package.json",
     systemDir +"/node_modules/lively.ast/node_modules/acorn/package.json"
   ]
 })

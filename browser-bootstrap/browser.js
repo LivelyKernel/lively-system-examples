@@ -14,8 +14,8 @@ Promise.resolve()
   });
 
 function printModuleState(name) {
-  var env = lively.modules.moduleEnv(System.normalizeSync(name)),
-      state = lively.lang.obj.inspect(env.recorder, {maxDepth: 1});
+  var m = lively.modules.module(System.normalizeSync(name)),
+      state = lively.lang.obj.inspect(m.recorder, {maxDepth: 1});
   log(`${name} runtime state: ${state}`)
 }
 

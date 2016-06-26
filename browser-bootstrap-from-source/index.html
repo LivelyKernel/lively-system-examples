@@ -27,8 +27,8 @@
       // First load the vm and modules packages, for that to work we need to
       // properly setup the SystemJS options in load-from-source.js!
       Promise.all([
-        System.import("lively.vm"),
-        System.import("lively.modules")
+        System.import("lively.modules"),
+        System.import("lively.vm")
       ])
       .then(loaded => {
         // At this point lively.modules takes over and we now have the notion
@@ -36,7 +36,7 @@
         // To test if this works we try loading a test package and evaluating
         // stuff in its internal context ...
 
-        var modules = loaded[1], vm = loaded[0];
+        var modules = loaded[0], vm = loaded[1];
 
         modules.importPackage("./test-package/")
         .then(module => log("Successfully loaded test-package: " + JSON.stringify(module)))

@@ -4,7 +4,7 @@
   "dependencies": {
     "lively.modules": "*",
     "lively.vm": "*",
-    "systemjs": "^0.19.29",
+    "systemjs": "^0.19.31",
     "systemjs-plugin-babel": "0.0.12"
   }
 }
