@@ -66,7 +66,7 @@ System.config({
     'systemjs-babel-build': oldSystem.map['systemjs-babel-build'],
     "lively.lang": systemDir + "/node_modules/lively.modules/node_modules/lively.lang/index.js",
     "lively.ast": systemDir + "/node_modules/lively.modules/node_modules/lively.ast/index.js",
-    "lively.vm": systemDir + "/node_modules/lively.modules/node_modules/lively.vm/index.js",
+    "lively.vm": systemDir + "/node_modules/lively.vm/index.js",
     "lively.modules": systemDir + "/node_modules/lively.modules/index.js",
       "path": "@empty",
       "fs": "@empty",
