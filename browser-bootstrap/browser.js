@@ -1,6 +1,6 @@
 Promise.resolve()
-  .then(function() { return lively.modules.importPackage('../../node_modules/lively.modules'); })
   .then(function() { return lively.modules.importPackage('../../node_modules/lively.vm'); })
+  .then(function() { return lively.modules.importPackage('../../node_modules/lively.modules'); })
   .then(function() {
     log(`Successfully bootstrapped lively.system`);
     printModuleState('lively.modules');

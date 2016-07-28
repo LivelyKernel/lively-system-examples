@@ -2,8 +2,8 @@ require("systemjs");
 require("lively.modules");
 
 Promise.resolve()
-  .then(() => lively.modules.importPackage("node_modules/lively.modules"))
   .then(() => lively.modules.importPackage("node_modules/lively.vm"))
+  .then(() => lively.modules.importPackage("node_modules/lively.modules"))
   .then(() => {
     log(`Successfully bootstrapped lively.system`);
     

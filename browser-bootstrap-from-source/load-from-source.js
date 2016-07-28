@@ -67,13 +67,7 @@ System.config({
     "lively.lang": systemDir + "/node_modules/lively.modules/node_modules/lively.lang/index.js",
     "lively.ast": systemDir + "/node_modules/lively.modules/node_modules/lively.ast/index.js",
     "lively.vm": systemDir + "/node_modules/lively.vm/index.js",
-    "lively.modules": systemDir + "/node_modules/lively.modules/index.js",
-      "path": "@empty",
-      "fs": "@empty",
-      "events": "@empty",
-      "util": "@empty",
-      "os": "@empty",
-      "child_process": "@empty",
+    "lively.modules": systemDir + "/node_modules/lively.modules/index.js"
   },
   meta: {
     "https://cdnjs.cloudflare.com/ajax/libs/fetch/0.11.0/fetch.js": {
